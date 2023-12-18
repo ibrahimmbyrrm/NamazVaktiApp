@@ -34,7 +34,7 @@ extension EndPointItems : EndPointType {
     }
     
     var path: String {
-        let currentDate = DateManager.shared.getCurrentDateString()
+        let currentDate = DateManager.getCurrentDateString()
         switch self {
         case .timesForCity(let city):
             return "timesFromPlace?country=Turkey&region=\(city)&city=\(city)&date=\(currentDate)&days=3&timezoneOffset=180&calculationMethod=Turkey"
@@ -51,16 +51,3 @@ extension EndPointItems : EndPointType {
 }
 //https://namaz-vakti.vercel.app/api/timesFromCoordinates?lat=39.91987&lng=32.85427&date=2023-10-29&days=3&timezoneOffset=180&calculationMethod=Turkey
 //https://namaz-vakti.vercel.app/api/timesFromPlace?country=Turkey&region=Iğdır&city=Iğdır&date=2023-10-29&days=3&timezoneOffset=180&calculationMethod=Turkey
-class DateManager {
-    static let shared = DateManager()
-    
-    func getCurrentDateString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let currentDate = Date()
-        let dateString = dateFormatter.string(from: currentDate)
-        
-        return dateString
-    }
-}

@@ -21,6 +21,10 @@
 		80B4DBDB2B2EFC6E0028BD14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */; };
 		80B4DBDD2B2EFDC10028BD14 /* EndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDC2B2EFDC10028BD14 /* EndPoints.swift */; };
 		80B4DBDF2B2F015B0028BD14 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDE2B2F015B0028BD14 /* NetworkManager.swift */; };
+		80F0E0162B2F946900B9D34A /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F0E0152B2F946900B9D34A /* MainController.swift */; };
+		80F0E0182B2F946C00B9D34A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F0E0172B2F946C00B9D34A /* MainView.swift */; };
+		80F0E01C2B2F947A00B9D34A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F0E01B2B2F947A00B9D34A /* MainViewModel.swift */; };
+		80F78C862B3042B000128E0E /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F78C852B3042B000128E0E /* DateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +44,10 @@
 		80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80B4DBDC2B2EFDC10028BD14 /* EndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
 		80B4DBDE2B2F015B0028BD14 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		80F0E0152B2F946900B9D34A /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		80F0E0172B2F946C00B9D34A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		80F0E01B2B2F947A00B9D34A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		80F78C852B3042B000128E0E /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 		8010AD5F2B2DF9040013BAAB /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				80F0E0142B2F945B00B9D34A /* MainScreen */,
 				8010AD652B2DFD3D0013BAAB /* LoginScreen */,
 			);
 			path = Screens;
@@ -117,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */,
+				80F78C852B3042B000128E0E /* DateManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -145,6 +155,24 @@
 				800E09882B2F0876001712D0 /* PrayResponse.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		80F0E0142B2F945B00B9D34A /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				80F0E0192B2F946E00B9D34A /* Components */,
+				80F0E0152B2F946900B9D34A /* MainController.swift */,
+				80F0E0172B2F946C00B9D34A /* MainView.swift */,
+				80F0E01B2B2F947A00B9D34A /* MainViewModel.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		80F0E0192B2F946E00B9D34A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,9 +250,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				80B4DBDF2B2F015B0028BD14 /* NetworkManager.swift in Sources */,
+				80F0E0182B2F946C00B9D34A /* MainView.swift in Sources */,
 				8010AD692B2DFDCA0013BAAB /* CitySelectionBox.swift in Sources */,
 				8010AD502B2DF8AC0013BAAB /* LoginController.swift in Sources */,
 				8010AD642B2DFCE90013BAAB /* BaseViewController.swift in Sources */,
+				80F78C862B3042B000128E0E /* DateManager.swift in Sources */,
+				80F0E01C2B2F947A00B9D34A /* MainViewModel.swift in Sources */,
 				800E09892B2F0876001712D0 /* PrayResponse.swift in Sources */,
 				8010AD4C2B2DF8AC0013BAAB /* AppDelegate.swift in Sources */,
 				80B4DBDB2B2EFC6E0028BD14 /* Constants.swift in Sources */,
@@ -232,6 +263,7 @@
 				800E09A82B2F6829001712D0 /* LoginViewModel.swift in Sources */,
 				80B4DBDD2B2EFDC10028BD14 /* EndPoints.swift in Sources */,
 				8010AD4E2B2DF8AC0013BAAB /* SceneDelegate.swift in Sources */,
+				80F0E0162B2F946900B9D34A /* MainController.swift in Sources */,
 				800E09A62B2F64FF001712D0 /* LocationBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

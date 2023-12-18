@@ -60,8 +60,8 @@ final class LoginViewModel : NSObject, LoginViewModelInterface{
         service.fetchData(type: endpoint) { result in
             switch result {
             case .success(let response):
-                print(response.place.city)
-                print(response.times)
+                self.delegate?.stopActivityIndicator()
+                self.delegate?.initializeMainControllerAndNavigate(times: response)
             case .failure(let error):
                 print(error)
             }
@@ -69,6 +69,7 @@ final class LoginViewModel : NSObject, LoginViewModelInterface{
     }
     
     func submitButtonTapped(type : RequestType) {
+        delegate?.startActivityIndicator()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.fetchPrayTimes(fetchMethod: type)
         }

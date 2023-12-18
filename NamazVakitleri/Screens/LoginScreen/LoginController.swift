@@ -10,7 +10,10 @@ import UIKit
 protocol LoginControllerInterface : AnyObject {
     func setupButtonActions()
     func setDelegates()
+    func startActivityIndicator()
+    func stopActivityIndicator()
     func refreshPicker()
+    func initializeMainControllerAndNavigate(times : PrayResponse)
 }
 
 final class LoginController: BaseViewController<LoginView>, LoginControllerInterface {
@@ -38,6 +41,22 @@ final class LoginController: BaseViewController<LoginView>, LoginControllerInter
         rootView.box2.addGestureRecognizer(gesture2)
         rootView.submitButton.addTarget(nil, action: #selector(submitButtonTapped), for: .touchUpInside)
         rootView.box1.doneButton.addTarget(nil, action: #selector(citySelectionEnded), for: .touchUpInside)
+    }
+    
+    func startActivityIndicator() {
+        rootView.activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        rootView.activityIndicator.stopAnimating()
+        
+    }
+    
+    func initializeMainControllerAndNavigate(times: PrayResponse) {
+        let mainController = MainController()
+        mainController.modalPresentationStyle = .fullScreen
+        mainController.viewModel = MainViewModel(PrayTimes: times,dateManager: DateManager())
+        present(mainController, animated: true)
     }
     
     
