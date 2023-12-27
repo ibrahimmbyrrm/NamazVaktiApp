@@ -10,6 +10,8 @@ import UIKit
 protocol MainControllerInterface : AnyObject {
     func refreshUI(timesViewModel : PrayViewModel)
     func refrestTimer(_ time : String)
+    
+    func setDelegates()
 }
 
 final class MainController : BaseViewController<MainView>,MainControllerInterface {
@@ -22,14 +24,28 @@ final class MainController : BaseViewController<MainView>,MainControllerInterfac
         viewModel.viewDidLoad()
     }
     
+    func setDelegates() {
+        rootView.timesTableView.delegate = self
+        rootView.timesTableView.dataSource = self
+    }
+    
     func refreshUI(timesViewModel: PrayViewModel) {
     }
     
     func refrestTimer(_ time: String) {
-        rootView.timer.text = time
+        rootView.timer.text = " \(viewModel.getPrayViewModel().location) \n \(time)"
+    }
+
+}
+extension MainController : UITableViewDelegate,UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRowsInSection()
     }
     
-    func findClosest() {
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "timeCell", for: indexPath) as! TimeCell
+        let timesViewModel = viewModel.getPrayViewModel()
+        cell.setTimes(timeDetail: timesViewModel.timeDetails[indexPath.row])
+        return cell
     }
 }

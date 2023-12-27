@@ -57,11 +57,7 @@ class DateManager {
         
         // Şuanki tarih ile hedef tarih arasındaki fark
         let components = Calendar.current.dateComponents([.hour, .minute, .second], from: currentDate, to: targetDate)
-        if components.hour ?? -1 >= 0 {
-            return true
-        }else {
-            return false
-        }
+        return (components.hour ?? -1 >= 0) && (components.minute ?? -1 >= 0)
     }
     
     func startCountdown(from targetDate: Date) {
@@ -77,7 +73,6 @@ class DateManager {
             // Farkı kullanarak geri sayımı güncelle
             let countdownText = String(format: "%02d:%02d:%02d", components.hour ?? 0, components.minute ?? 0, components.second ?? 0)
             delegate?.updateTimer(countdownString: countdownText)
-            print("Geri Sayım: \(countdownText)")
             
             // Hedef tarihe ulaşıldığında timer'ı durdur
             if currentDate >= targetDate {

@@ -18,6 +18,7 @@
 		8010AD642B2DFCE90013BAAB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD632B2DFCE90013BAAB /* BaseViewController.swift */; };
 		8010AD672B2DFD4B0013BAAB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD662B2DFD4B0013BAAB /* LoginView.swift */; };
 		8010AD692B2DFDCA0013BAAB /* CitySelectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD682B2DFDCA0013BAAB /* CitySelectionBox.swift */; };
+		805F0D302B3C35AF00FECEF6 /* TimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */; };
 		80B4DBDB2B2EFC6E0028BD14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */; };
 		80B4DBDD2B2EFDC10028BD14 /* EndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDC2B2EFDC10028BD14 /* EndPoints.swift */; };
 		80B4DBDF2B2F015B0028BD14 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDE2B2F015B0028BD14 /* NetworkManager.swift */; };
@@ -41,6 +42,7 @@
 		8010AD632B2DFCE90013BAAB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8010AD662B2DFD4B0013BAAB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8010AD682B2DFDCA0013BAAB /* CitySelectionBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectionBox.swift; sourceTree = "<group>"; };
+		805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCell.swift; sourceTree = "<group>"; };
 		80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80B4DBDC2B2EFDC10028BD14 /* EndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
 		80B4DBDE2B2F015B0028BD14 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		80F0E0192B2F946E00B9D34A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				80F0E0182B2F946C00B9D34A /* MainView.swift in Sources */,
 				8010AD692B2DFDCA0013BAAB /* CitySelectionBox.swift in Sources */,
 				8010AD502B2DF8AC0013BAAB /* LoginController.swift in Sources */,
+				805F0D302B3C35AF00FECEF6 /* TimeCell.swift in Sources */,
 				8010AD642B2DFCE90013BAAB /* BaseViewController.swift in Sources */,
 				80F78C862B3042B000128E0E /* DateManager.swift in Sources */,
 				80F0E01C2B2F947A00B9D34A /* MainViewModel.swift in Sources */,

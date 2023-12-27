@@ -90,3 +90,8 @@ enum Cities : String, CaseIterable {
     case Osmaniye
     case Düzce
 }
+
+enum Constants {
+    static let timeNames = ["İmsak","Sabah","Öğlen","İkindi","Akşam","Yatsı"]
+
+}

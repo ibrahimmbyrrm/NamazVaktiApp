@@ -11,7 +11,9 @@ protocol MainViewModelInterface {
     var delegate : MainControllerInterface? {get set}
     var PrayTimes : PrayResponse {get set}
     
+    func numberOfRowsInSection() -> Int
     func viewDidLoad()
+    func getPrayViewModel() -> PrayViewModel
 
 }
 
@@ -30,12 +32,17 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     weak var delegate: MainControllerInterface?
     
     func viewDidLoad() {
-        delegate?.refreshUI(timesViewModel: getPrayViewModel(prayResponse: PrayTimes))
+        delegate?.refreshUI(timesViewModel: getPrayViewModel())
+        delegate?.setDelegates()
         dateManager.calculateTimeRemaining(targetTimeStrings: PrayTimes.times[DateManager.getCurrentDateString()] ?? [""])
     }
     
-    func getPrayViewModel(prayResponse : PrayResponse) -> PrayViewModel {
-        return PrayViewModel(response: prayResponse)
+    func numberOfRowsInSection() -> Int {
+        return getPrayViewModel().numberOfTime
+    }
+    
+    func getPrayViewModel() -> PrayViewModel {
+        return PrayViewModel(response: self.PrayTimes)
     }
     
     func updateTimer(countdownString: String) {
@@ -57,24 +64,22 @@ extension PrayViewModel {
     var location : String {
         response.place.city
     }
-
-    var sunset : String {
-        response.times[DateManager.getCurrentDateString()]?[0] ?? ""
-    }
     
-    var fajr : String {
-        response.times[DateManager.getCurrentDateString()]?[1] ?? ""
+    var timeDetails : [TimeDetail] {
+        var detailList = [TimeDetail]()
+        for i in 0...5 {
+            detailList.append(TimeDetail(name: Constants.timeNames[i],
+                                         time: response.times[DateManager.getCurrentDateString()]?[i] ?? ""))
+        }
+        return detailList
     }
-    var dhuhr : String {
-        response.times[DateManager.getCurrentDateString()]?[2] ?? ""
+
+    var numberOfTime : Int {
+        return 5
     }
-    var asr : String {
-        response.times[DateManager.getCurrentDateString()]?[3] ?? ""
-    }
-    var maghrib : String {
-        response.times[DateManager.getCurrentDateString()]?[4] ?? ""
-    }
-    var isha : String {
-        response.times[DateManager.getCurrentDateString()]?[5] ?? ""
-    }
+}
+
+struct TimeDetail {
+    let name : String
+    let time : String
 }
