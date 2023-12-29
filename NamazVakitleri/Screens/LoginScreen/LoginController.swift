@@ -55,7 +55,7 @@ final class LoginController: BaseViewController<LoginView>, LoginControllerInter
     func initializeMainControllerAndNavigate(times: PrayResponse) {
         let mainController = MainController()
         mainController.modalPresentationStyle = .fullScreen
-        mainController.viewModel = MainViewModel(PrayTimes: times,dateManager: DateManager())
+        mainController.viewModel = MainViewModel(prayTimes: times,dateManager: DateManager())
         present(mainController, animated: true)
     }
     

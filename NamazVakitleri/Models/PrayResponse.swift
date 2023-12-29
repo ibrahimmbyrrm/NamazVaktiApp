@@ -12,6 +12,23 @@ struct PrayResponse: Codable {
     let times: [String: [String]]
 }
 
+extension PrayResponse {
+    var todatDates : [Date] {
+        var list = [Date]()
+        for hour in times[Date.currentDateString] ?? [""] {
+            list.append("\(Date.currentDateString) \(hour)".formatDate())
+        }
+        return list
+    }
+    var tomorrowsDates : [Date] {
+        var list = [Date]()
+        for hour in times[Date.tomorrowDateString] ?? [""] {
+            list.append("\(Date.tomorrowDateString) \(hour)".formatDate())
+        }
+        return list
+    }
+}
+
 // MARK: - Place
 struct Place: Codable {
     let country, countryCode, city, region: String

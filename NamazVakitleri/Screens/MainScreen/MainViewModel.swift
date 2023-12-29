@@ -9,7 +9,7 @@ import Foundation
 
 protocol MainViewModelInterface {
     var delegate : MainControllerInterface? {get set}
-    var PrayTimes : PrayResponse {get set}
+    var prayTimes : PrayResponse {get set}
     
     func numberOfRowsInSection() -> Int
     func viewDidLoad()
@@ -19,22 +19,27 @@ protocol MainViewModelInterface {
 
 final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     
-    var PrayTimes: PrayResponse
+    var prayTimes: PrayResponse
     
-    var dateManager : DateManager
+    var dateManager : DateManagerInterface
     
-    init(PrayTimes: PrayResponse,dateManager : DateManager) {
-        self.PrayTimes = PrayTimes
+    init(prayTimes: PrayResponse,dateManager : DateManagerInterface) {
+        self.prayTimes = prayTimes
         self.dateManager = dateManager
-        dateManager.delegate = self
     }
     
     weak var delegate: MainControllerInterface?
     
     func viewDidLoad() {
+        print(prayTimes.times)
+        dateManager.delegate = self
         delegate?.refreshUI(timesViewModel: getPrayViewModel())
         delegate?.setDelegates()
-        dateManager.calculateTimeRemaining(targetTimeStrings: PrayTimes.times[DateManager.getCurrentDateString()] ?? [""])
+        dateManager.calculateTimeRemaining(targetDates: prayTimes.todatDates,isToday: true)
+    }
+    
+    func changeTheDay() {
+        dateManager.calculateTimeRemaining(targetDates: prayTimes.tomorrowsDates,isToday: false)
     }
     
     func numberOfRowsInSection() -> Int {
@@ -42,7 +47,7 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     }
     
     func getPrayViewModel() -> PrayViewModel {
-        return PrayViewModel(response: self.PrayTimes)
+        return PrayViewModel(response: self.prayTimes)
     }
     
     func updateTimer(countdownString: String) {
@@ -69,7 +74,7 @@ extension PrayViewModel {
         var detailList = [TimeDetail]()
         for i in 0...5 {
             detailList.append(TimeDetail(name: Constants.timeNames[i],
-                                         time: response.times[DateManager.getCurrentDateString()]?[i] ?? ""))
+                                         time: response.times[Date.currentDateString]?[i] ?? ""))
         }
         return detailList
     }

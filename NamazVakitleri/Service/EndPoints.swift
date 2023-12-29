@@ -34,7 +34,7 @@ extension EndPointItems : EndPointType {
     }
     
     var path: String {
-        let currentDate = DateManager.getCurrentDateString()
+        let currentDate = Date.currentDateString
         switch self {
         case .timesForCity(let city):
             return "timesFromPlace?country=Turkey&region=\(city)&city=\(city)&date=\(currentDate)&days=3&timezoneOffset=180&calculationMethod=Turkey"

@@ -6,78 +6,59 @@
 //
 
 import Foundation
+import SwiftDate
 
 protocol DateManagerDelegate : AnyObject {
     func updateTimer(countdownString : String)
+    func changeTheDay()
 }
 
-class DateManager {
+protocol DateManagerInterface {
+    var delegate : DateManagerDelegate? {get set}
+    func calculateTimeRemaining(targetDates : [Date],isToday : Bool)
+}
+
+class DateManager : DateManagerInterface {
     
     weak var delegate : DateManagerDelegate?
     
-    static func getCurrentDateString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let currentDate = Date()
-        let dateString = dateFormatter.string(from: currentDate)
-        
-        return dateString
+    init(delegate: DateManagerDelegate? = nil) {
+        self.delegate = delegate
     }
     
-    func calculateTimeRemaining(targetTimeStrings : [String]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+    func calculateTimeRemaining(targetDates : [Date],isToday : Bool) {
         
-        for targetTimeString in targetTimeStrings {
-            if let targetTime = dateFormatter.date(from: targetTimeString) {
-                let calendar = Calendar.current
-                if let targetDate = calendar.date(bySettingHour: calendar.component(.hour, from: targetTime),
-                                                  minute: calendar.component(.minute, from: targetTime),
-                                                  second: 0,
-                                                  of: Date()) {
-                    if findClosestTime(targetDate: targetDate) {
-                        startCountdown(from: targetDate)
-                        break
-                    }
-                    
-                    
-                } else {
-                    print("Geçersiz saat formatı")
-                }
+        var components: DateComponents?
+        
+        components = isToday ? findClosestDate(in: targetDates) : targetDates[0] - Date.currentDate
+
+        if let components {
+            startCountdown(components: components)
+        }else {
+            delegate?.changeTheDay()
+        }
+    }
+    
+    private func findClosestDate(in targetDates: [Date]) -> DateComponents? {
+        for date in targetDates {
+            if date.isAfterDate(Date.currentDate, granularity: .minute) {
+                return date - Date.currentDate
             }
         }
-        
-        
+        return nil
     }
     
-    func findClosestTime(targetDate : Date) -> Bool {
-        
-        let currentDate = Date()
-        
-        // Şuanki tarih ile hedef tarih arasındaki fark
-        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: currentDate, to: targetDate)
-        return (components.hour ?? -1 >= 0) && (components.minute ?? -1 >= 0)
-    }
-    
-    func startCountdown(from targetDate: Date) {
-        // Timer'ı her saniyede bir çalıştır
+    private func startCountdown(components: DateComponents) {
+        var remainingComponents = components
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             guard let self = self else { return }
-            
-            // Şuanki tarih ve saat
-            let currentDate = Date()
-            
-            // Şuanki tarih ile hedef tarih arasındaki fark
-            let components = Calendar.current.dateComponents([.hour, .minute, .second], from: currentDate, to: targetDate)
-            // Farkı kullanarak geri sayımı güncelle
-            let countdownText = String(format: "%02d:%02d:%02d", components.hour ?? 0, components.minute ?? 0, components.second ?? 0)
-            delegate?.updateTimer(countdownString: countdownText)
-            
-            // Hedef tarihe ulaşıldığında timer'ı durdur
-            if currentDate >= targetDate {
+            let countdownText = String(format: "%02d:%02d:%02d", remainingComponents.hour ?? 0, remainingComponents.minute ?? 0, remainingComponents.second ?? 0)
+            self.delegate?.updateTimer(countdownString: countdownText)
+            if remainingComponents.isZero {
                 timer.invalidate()
                 print("Süre doldu!")
+            } else {
+                remainingComponents.second = (remainingComponents.second ?? 0) - 1
             }
         }
     }

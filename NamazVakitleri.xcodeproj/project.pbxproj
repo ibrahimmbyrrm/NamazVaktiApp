@@ -19,6 +19,9 @@
 		8010AD672B2DFD4B0013BAAB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD662B2DFD4B0013BAAB /* LoginView.swift */; };
 		8010AD692B2DFDCA0013BAAB /* CitySelectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD682B2DFDCA0013BAAB /* CitySelectionBox.swift */; };
 		805F0D302B3C35AF00FECEF6 /* TimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */; };
+		808DB9512B3CC661000121D0 /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 808DB9502B3CC661000121D0 /* SwiftDate */; };
+		808DB9542B3F1382000121D0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DB9532B3F1382000121D0 /* Date+Ext.swift */; };
+		808DB9562B3F13A0000121D0 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DB9552B3F13A0000121D0 /* String+Ext.swift */; };
 		80B4DBDB2B2EFC6E0028BD14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */; };
 		80B4DBDD2B2EFDC10028BD14 /* EndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDC2B2EFDC10028BD14 /* EndPoints.swift */; };
 		80B4DBDF2B2F015B0028BD14 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4DBDE2B2F015B0028BD14 /* NetworkManager.swift */; };
@@ -43,6 +46,8 @@
 		8010AD662B2DFD4B0013BAAB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8010AD682B2DFDCA0013BAAB /* CitySelectionBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectionBox.swift; sourceTree = "<group>"; };
 		805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCell.swift; sourceTree = "<group>"; };
+		808DB9532B3F1382000121D0 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		808DB9552B3F13A0000121D0 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		80B4DBDC2B2EFDC10028BD14 /* EndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
 		80B4DBDE2B2F015B0028BD14 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -57,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808DB9512B3CC661000121D0 /* SwiftDate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +97,7 @@
 		8010AD4A2B2DF8AC0013BAAB /* NamazVakitleri */ = {
 			isa = PBXGroup;
 			children = (
+				808DB9522B3F137B000121D0 /* Extensions */,
 				80B4DBE02B2F085D0028BD14 /* Models */,
 				8010AD622B2DF91A0013BAAB /* Core */,
 				8010AD612B2DF9150013BAAB /* Utils */,
@@ -151,6 +158,15 @@
 			path = LoginScreen;
 			sourceTree = "<group>";
 		};
+		808DB9522B3F137B000121D0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				808DB9532B3F1382000121D0 /* Date+Ext.swift */,
+				808DB9552B3F13A0000121D0 /* String+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		80B4DBE02B2F085D0028BD14 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +211,7 @@
 			);
 			name = NamazVakitleri;
 			packageProductDependencies = (
+				808DB9502B3CC661000121D0 /* SwiftDate */,
 			);
 			productName = NamazVakitleri;
 			productReference = 8010AD482B2DF8AC0013BAAB /* NamazVakitleri.app */;
@@ -225,6 +242,7 @@
 			);
 			mainGroup = 8010AD3F2B2DF8AC0013BAAB;
 			packageReferences = (
+				808DB94F2B3CC661000121D0 /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = 8010AD492B2DF8AC0013BAAB /* Products */;
 			projectDirPath = "";
@@ -261,9 +279,11 @@
 				80F78C862B3042B000128E0E /* DateManager.swift in Sources */,
 				80F0E01C2B2F947A00B9D34A /* MainViewModel.swift in Sources */,
 				800E09892B2F0876001712D0 /* PrayResponse.swift in Sources */,
+				808DB9542B3F1382000121D0 /* Date+Ext.swift in Sources */,
 				8010AD4C2B2DF8AC0013BAAB /* AppDelegate.swift in Sources */,
 				80B4DBDB2B2EFC6E0028BD14 /* Constants.swift in Sources */,
 				8010AD672B2DFD4B0013BAAB /* LoginView.swift in Sources */,
+				808DB9562B3F13A0000121D0 /* String+Ext.swift in Sources */,
 				800E09A82B2F6829001712D0 /* LoginViewModel.swift in Sources */,
 				80B4DBDD2B2EFDC10028BD14 /* EndPoints.swift in Sources */,
 				8010AD4E2B2DF8AC0013BAAB /* SceneDelegate.swift in Sources */,
@@ -481,6 +501,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		808DB94F2B3CC661000121D0 /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		808DB9502B3CC661000121D0 /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 808DB94F2B3CC661000121D0 /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8010AD402B2DF8AC0013BAAB /* Project object */;
 }

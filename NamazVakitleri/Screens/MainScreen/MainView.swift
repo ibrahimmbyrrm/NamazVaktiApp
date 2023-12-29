@@ -43,11 +43,6 @@ final class MainView : UIView {
             timesTableView.widthAnchor.constraint(equalToConstant: 250),
             timesTableView.heightAnchor.constraint(equalToConstant: 250),
             
-//            timesTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//            timesTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 50),
-//            timesTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -50),
-//            timesTableView.topAnchor.constraint(equalTo: timer.bottomAnchor)
-            
         ])
     }
     
