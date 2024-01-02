@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "The Night of Lailatul Qadr for Ramadan Kareem, Beautiful Illustration .png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

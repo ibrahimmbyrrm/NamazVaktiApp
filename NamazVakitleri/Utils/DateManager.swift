@@ -11,11 +11,14 @@ import SwiftDate
 protocol DateManagerDelegate : AnyObject {
     func updateTimer(countdownString : String)
     func changeTheDay()
+    func getClosestTime(date : Date)
+    func timerFinished()
 }
 
 protocol DateManagerInterface {
     var delegate : DateManagerDelegate? {get set}
     func calculateTimeRemaining(targetDates : [Date],isToday : Bool)
+    func getCurrentDateString() -> String
 }
 
 class DateManager : DateManagerInterface {
@@ -24,6 +27,12 @@ class DateManager : DateManagerInterface {
     
     init(delegate: DateManagerDelegate? = nil) {
         self.delegate = delegate
+    }
+    
+    func getCurrentDateString() -> String {
+        let currentDate = Date.currentDate
+        let formatted = currentDate.toString(.custom("MMMM d YYYY EEEE"))
+        return formatted
     }
     
     func calculateTimeRemaining(targetDates : [Date],isToday : Bool) {
@@ -42,6 +51,7 @@ class DateManager : DateManagerInterface {
     private func findClosestDate(in targetDates: [Date]) -> DateComponents? {
         for date in targetDates {
             if date.isAfterDate(Date.currentDate, granularity: .minute) {
+                delegate?.getClosestTime(date: date)
                 return date - Date.currentDate
             }
         }
@@ -52,14 +62,27 @@ class DateManager : DateManagerInterface {
         var remainingComponents = components
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             guard let self = self else { return }
-            let countdownText = String(format: "%02d:%02d:%02d", remainingComponents.hour ?? 0, remainingComponents.minute ?? 0, remainingComponents.second ?? 0)
-            self.delegate?.updateTimer(countdownString: countdownText)
-            if remainingComponents.isZero {
+
+            if remainingComponents.second == 0 && remainingComponents.minute == 0 && remainingComponents.hour == 0 {
                 timer.invalidate()
-                print("Süre doldu!")
+                delegate?.timerFinished()
             } else {
-                remainingComponents.second = (remainingComponents.second ?? 0) - 1
+                if let currentSecond = remainingComponents.second, currentSecond > 0 {
+                    remainingComponents.second = currentSecond - 1
+                } else if let currentMinute = remainingComponents.minute, currentMinute > 0 {
+                    remainingComponents.minute = currentMinute - 1
+                    remainingComponents.second = 59
+                } else if let currentHour = remainingComponents.hour, currentHour > 0 {
+                    remainingComponents.hour = currentHour - 1
+                    remainingComponents.minute = 59
+                    remainingComponents.second = 59
+                }
+
+                let countdownText = String(format: Constants.timerTextFormat, remainingComponents.hour ?? 0, remainingComponents.minute ?? 0, remainingComponents.second ?? 0)
+                self.delegate?.updateTimer(countdownString: countdownText)
             }
         }
     }
+
+
 }

@@ -92,6 +92,12 @@ enum Cities : String, CaseIterable {
 }
 
 enum Constants {
+    static let baseURL = "https://namaz-vakti.vercel.app/api/"
     static let timeNames = ["İmsak","Sabah","Öğlen","İkindi","Akşam","Yatsı"]
-
+    static let timezoneRegionName = "Europe/Istanbul"
+    static let yyyyMMdd_Format = "yyyy-MM-dd"
+    static let dateAndClockFormat = "yyyy-MM-dd HH:mm"
+    static let hourAndMinuteFormat = "HH:mm"
+    static let gmtTimeZone = "GMT"
+    static let timerTextFormat = "%02d:%02d:%02d"
 }

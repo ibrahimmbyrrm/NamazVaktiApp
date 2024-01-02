@@ -10,8 +10,8 @@ import Foundation
 extension String {
     func formatDate() -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        dateFormatter.timeZone = .init(abbreviation: "GMT")
+        dateFormatter.dateFormat = Constants.dateAndClockFormat
+        dateFormatter.timeZone = .init(abbreviation: Constants.gmtTimeZone)
         
         return dateFormatter.date(from: self) ?? Date()
        

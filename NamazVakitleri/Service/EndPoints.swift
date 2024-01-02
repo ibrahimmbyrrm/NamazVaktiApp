@@ -30,7 +30,7 @@ extension EndPointItems : EndPointType {
     }
     
     var baseURL: String {
-        "https://namaz-vakti.vercel.app/api/"
+        Constants.baseURL
     }
     
     var path: String {

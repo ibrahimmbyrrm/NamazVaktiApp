@@ -28,7 +28,6 @@ final class NetworkManager : NetworkInterface {
         }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = type.method.rawValue
-        
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             DispatchQueue.main.async {
                 if (response as? HTTPURLResponse)?.statusCode != 200 {

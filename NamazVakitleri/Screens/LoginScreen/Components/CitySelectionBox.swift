@@ -7,6 +7,12 @@
 
 import UIKit
 
+extension UIView {
+    func addSubviews(views : [UIView]) {
+        views.forEach({addSubview($0)})
+    }
+}
+
 class CitySelectionBox : UIView {
     
     var isExpanded = false {
@@ -30,6 +36,7 @@ class CitySelectionBox : UIView {
         textField.layer.borderWidth = 2
         textField.textAlignment = .center
         textField.placeholder = "Ankara"
+        textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
@@ -59,18 +66,14 @@ class CitySelectionBox : UIView {
     var centerYConstraint = NSLayoutConstraint()
     
     private func commonInit() {
-        addSubview(titleLabel)
-        addSubview(textField)
-        addSubview(doneButton)
+        addSubviews(views: [titleLabel,textField,doneButton])
         textField.isHidden = true
         doneButton.isHidden = true
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        // Bu kısımda görünümünüzü özelleştirebilirsiniz
         
         centerXConstraint = titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor,constant: 0)
         centerYConstraint = titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor,constant: 0)
         backgroundColor = UIColor.white
-        layer.borderColor = CGColor(red: 122/255, green: 159/255, blue: 1, alpha: 1)
+        layer.borderColor = UIColor.palette2.cgColor
         layer.borderWidth = 4
         layer.cornerRadius = 20.0 // Köşe yuvarlatma miktarını ayarlayın
         layer.masksToBounds = true // Köşe yuvarlatma sınırlarını belirtilen sınırlar içinde tutar
@@ -89,6 +92,7 @@ class CitySelectionBox : UIView {
             doneButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+
     
     func boxExpanded() {
         UIView.animate(withDuration: 0.5) {
@@ -97,13 +101,13 @@ class CitySelectionBox : UIView {
                 self.textField.isHidden = false
                 self.centerXConstraint.constant = -50
                 self.centerYConstraint.constant = -40
-                self.layer.borderColor = UIColor.blue.cgColor
+                self.layer.borderColor = UIColor.palette1.cgColor
             }else {
                 self.textField.isHidden = true
                 self.doneButton.isHidden = true
                 self.centerXConstraint.constant = 0
                 self.centerYConstraint.constant = 0
-                self.layer.borderColor = CGColor(red: 122/255, green: 159/255, blue: 1, alpha: 1)
+                self.layer.borderColor = UIColor.palette2.cgColor
             }
         }
         

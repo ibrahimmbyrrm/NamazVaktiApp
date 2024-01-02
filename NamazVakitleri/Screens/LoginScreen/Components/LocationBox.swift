@@ -37,7 +37,7 @@ class LocationBox : UIView {
     private func commonInit() {
         addSubview(titleLabel)
         backgroundColor = UIColor.white
-        layer.borderColor = CGColor(red: 122/255, green: 159/255, blue: 1, alpha: 1)
+        layer.borderColor = UIColor.palette2.cgColor
         layer.borderWidth = 4
         layer.cornerRadius = 20.0 // Köşe yuvarlatma miktarını ayarlayın
         layer.masksToBounds = true // Köşe yuvarlatma sınırlarını belirtilen sınırlar içinde tutar
@@ -50,11 +50,6 @@ class LocationBox : UIView {
     }
     
     func boxExpanded() {
-        if isExpanded {
-            self.layer.borderColor = UIColor.blue.cgColor
-        }else {
-            self.layer.borderColor = CGColor(red: 122/255, green: 159/255, blue: 1, alpha: 1)
-        }
-        
+        self.layer.borderColor = isExpanded ? UIColor.palette1.cgColor : UIColor.palette2.cgColor
     }
 }

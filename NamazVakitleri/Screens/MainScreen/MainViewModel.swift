@@ -10,10 +10,12 @@ import Foundation
 protocol MainViewModelInterface {
     var delegate : MainControllerInterface? {get set}
     var prayTimes : PrayResponse {get set}
+    var closestDateString : String  {get set}
     
     func numberOfRowsInSection() -> Int
     func viewDidLoad()
     func getPrayViewModel() -> PrayViewModel
+    func getCurrentDate() -> String
 
 }
 
@@ -22,6 +24,7 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     var prayTimes: PrayResponse
     
     var dateManager : DateManagerInterface
+    var closestDateString : String = ""
     
     init(prayTimes: PrayResponse,dateManager : DateManagerInterface) {
         self.prayTimes = prayTimes
@@ -31,17 +34,12 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     weak var delegate: MainControllerInterface?
     
     func viewDidLoad() {
-        print(prayTimes.times)
         dateManager.delegate = self
         delegate?.refreshUI(timesViewModel: getPrayViewModel())
         delegate?.setDelegates()
         dateManager.calculateTimeRemaining(targetDates: prayTimes.todatDates,isToday: true)
     }
-    
-    func changeTheDay() {
-        dateManager.calculateTimeRemaining(targetDates: prayTimes.tomorrowsDates,isToday: false)
-    }
-    
+    //MARK: - Pray List Methods
     func numberOfRowsInSection() -> Int {
         return getPrayViewModel().numberOfTime
     }
@@ -49,9 +47,27 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     func getPrayViewModel() -> PrayViewModel {
         return PrayViewModel(response: self.prayTimes)
     }
+    //MARK: - DateManager Delegate Functions
+    func changeTheDay() {
+        dateManager.calculateTimeRemaining(targetDates: prayTimes.tomorrowsDates,isToday: false)
+    }
     
+    func getCurrentDate() -> String {
+        dateManager.getCurrentDateString()
+    }
+    
+    func getClosestTime(date: Date) {
+        self.closestDateString = date.toString(.custom(Constants.hourAndMinuteFormat))
+    }
+    
+    func timerFinished() {
+        delegate?.timeIsUp()
+        dateManager.calculateTimeRemaining(targetDates: prayTimes.todatDates,isToday: true)
+    }
+   
     func updateTimer(countdownString: String) {
-        delegate?.refrestTimer(countdownString)
+        let closestTime = getPrayViewModel().timeDetails.first(where: {$0.time == self.closestDateString})
+        delegate?.refrestTimer("\(closestTime?.name ?? "") Vaktine :\n\(countdownString)")
     }
 }
 
@@ -80,7 +96,7 @@ extension PrayViewModel {
     }
 
     var numberOfTime : Int {
-        return 5
+        return 6
     }
 }
 
