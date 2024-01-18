@@ -58,7 +58,7 @@ extension MainController : UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "timeCell", for: indexPath) as! TimeCell
         let timesViewModel = viewModel.getPrayViewModel()
         let isClosest = viewModel.closestDateString == timesViewModel.timeDetails[indexPath.row].time
-        cell.setTimes(timeDetail: timesViewModel.timeDetails[indexPath.row],isClosest: isClosest)
-        return cell
-    }
+            cell.setTimes(timeDetail: timesViewModel.timeDetails[indexPath.row],isClosest: isClosest)
+            return cell
+        }
 }
