@@ -45,7 +45,7 @@ final class MainController : BaseViewController<MainView>,MainControllerInterfac
     }
     
     func refreshUI(timesViewModel: PrayViewModel) {
-        rootView.currentDateLabel.text = viewModel.getPrayViewModel().location + "\n" + Date.getCurrentDateString()
+        rootView.currentDateLabel.text = viewModel.getPrayViewModel().location
     }
     
     func refrestTimer(_ time: String) {

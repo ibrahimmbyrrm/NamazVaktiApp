@@ -60,7 +60,12 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
    
     func updateTimer(countdownString: String) {
         let closestTime = getPrayViewModel().timeDetails.first(where: {$0.time == self.closestDateString})
-        delegate?.refrestTimer("\(closestTime?.name ?? "") Vaktine :\n\(countdownString)")
+        if let closestTime {
+            delegate?.refrestTimer("\(closestTime.name) Vaktine :\n\(countdownString)")
+        }else {
+            delegate?.refrestTimer("\(Constants.timeNames[0]) Vaktine :\n\(countdownString)")
+        }
+        
     }
 }
 
@@ -84,6 +89,15 @@ extension PrayViewModel {
         for i in 0...5 {
             detailList.append(TimeDetail(name: Constants.timeNames[i],
                                          time: response.times[Date.currentDateString]?[i] ?? ""))
+        }
+        return detailList
+    }
+    
+    var tomorrowDetails : [TimeDetail] {
+        var detailList = [TimeDetail]()
+        for i in 0...5 {
+            detailList.append(TimeDetail(name: Constants.timeNames[i],
+                                         time: response.times[Date.tomorrowDateString]?[i] ?? ""))
         }
         return detailList
     }
