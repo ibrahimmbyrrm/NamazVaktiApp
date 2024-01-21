@@ -57,11 +57,12 @@ final class LoginViewModel : NSObject, LoginViewModelInterface{
     func fetchPrayTimes(fetchMethod : RequestType) {
         let endpoint = fetchMethod == .city ? EndPointItems<PrayResponse>.timesForCity(self.selectedCity) : EndPointItems<PrayResponse>.timesForLocation(userLocation.latitude, userLocation.longitude)
         
-        service.fetchData(type: endpoint) { result in
+        service.fetchData(type: endpoint) { [weak self] result in
             switch result {
             case .success(let response):
-                self.delegate?.stopActivityIndicator()
-                self.delegate?.initializeMainControllerAndNavigate(times: response)
+                self?.delegate?.stopActivityIndicator()
+                self?.locationManager.stopUpdatingLocation()
+                self?.delegate?.initializeMainControllerAndNavigate(times: response)
             case .failure(let error):
                 print(error)
             }

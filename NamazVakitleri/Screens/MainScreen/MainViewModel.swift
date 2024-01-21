@@ -15,11 +15,12 @@ protocol MainViewModelInterface {
     func numberOfRowsInSection() -> Int
     func viewDidLoad()
     func getPrayViewModel() -> PrayViewModel
-    func getCurrentDate() -> String
 
 }
 
 final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
+    
+    weak var delegate: MainControllerInterface?
     
     var prayTimes: PrayResponse
     
@@ -29,15 +30,15 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     init(prayTimes: PrayResponse,dateManager : DateManagerInterface) {
         self.prayTimes = prayTimes
         self.dateManager = dateManager
+        dateManager.setTodayDates(prayTimes.todatDates)
+        dateManager.setTomorrowDates(prayTimes.tomorrowsDates)
     }
-    
-    weak var delegate: MainControllerInterface?
-    
+
     func viewDidLoad() {
         dateManager.delegate = self
         delegate?.refreshUI(timesViewModel: getPrayViewModel())
         delegate?.setDelegates()
-        dateManager.calculateTimeRemaining(targetDates: prayTimes.todatDates,isToday: true)
+        dateManager.calculateTimeRemaining()
     }
     //MARK: - Pray List Methods
     func numberOfRowsInSection() -> Int {
@@ -48,13 +49,6 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
         return PrayViewModel(response: self.prayTimes)
     }
     //MARK: - DateManager Delegate Functions
-    func changeTheDay() {
-        dateManager.calculateTimeRemaining(targetDates: prayTimes.tomorrowsDates,isToday: false)
-    }
-    
-    func getCurrentDate() -> String {
-        dateManager.getCurrentDateString()
-    }
     
     func getClosestTime(date: Date) {
         self.closestDateString = date.toString(.custom(Constants.hourAndMinuteFormat))
@@ -62,7 +56,6 @@ final class MainViewModel : MainViewModelInterface,DateManagerDelegate {
     
     func timerFinished() {
         delegate?.timeIsUp()
-        dateManager.calculateTimeRemaining(targetDates: prayTimes.todatDates,isToday: true)
     }
    
     func updateTimer(countdownString: String) {

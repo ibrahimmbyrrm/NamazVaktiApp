@@ -95,7 +95,7 @@ class CitySelectionBox : UIView {
 
     
     func boxExpanded() {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { 
             if self.isExpanded {
                 self.doneButton.isHidden = false
                 self.textField.isHidden = false

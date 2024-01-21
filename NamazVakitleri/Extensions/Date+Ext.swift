@@ -10,10 +10,10 @@ import Foundation
 
 extension Date {
     static var currentDate : Date {
-        let timeZone = TimeZone(identifier: Constants.timezoneRegionName)
-        let currentDate = Date()
-        let correctedDate = currentDate.addingTimeInterval(TimeInterval(timeZone?.secondsFromGMT(for: currentDate) ?? 0))
-        return correctedDate
+        let formatter = DateFormatter()
+        let format = "MM-dd-yyyy HH:mm"
+        formatter.dateFormat = format
+        return formatter.string(from: Date()).toDate(format)?.date ?? Date()
     }
     
     static var currentDateString : String {
@@ -23,5 +23,11 @@ extension Date {
     static var tomorrowDateString : String {
         let tomorrowDate = Date() + 1.days
         return tomorrowDate.toString(.custom(Constants.yyyyMMdd_Format))
+    }
+    
+    static func getCurrentDateString() -> String {
+        let currentDate = Date.currentDate
+        let formatted = currentDate.toString(.custom("MMMM d YYYY EEEE"))
+        return formatted
     }
 }

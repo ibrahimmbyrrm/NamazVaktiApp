@@ -26,6 +26,10 @@ final class LoginController: BaseViewController<LoginView>, LoginControllerInter
         viewModel.viewDidLoad()
     }
     
+    deinit {
+        print("deinit edildi")
+    }
+
     func setDelegates() {
         rootView.box1.setPickerDelegate(delegate: self, dataSource: self)
     }
@@ -55,8 +59,8 @@ final class LoginController: BaseViewController<LoginView>, LoginControllerInter
     func initializeMainControllerAndNavigate(times: PrayResponse) {
         let mainController = MainController()
         mainController.modalPresentationStyle = .fullScreen
-        mainController.viewModel = MainViewModel(prayTimes: times,dateManager: DateManager())
-        present(mainController, animated: true)
+        mainController.setupViewModel(times, dateManager: DateManager())
+        navigationController?.show(mainController, sender: nil)
     }
     
     

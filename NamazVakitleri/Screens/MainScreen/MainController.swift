@@ -25,6 +25,10 @@ final class MainController : BaseViewController<MainView>,MainControllerInterfac
         viewModel.viewDidLoad()
     }
     
+    func setupViewModel(_ times : PrayResponse,dateManager : DateManagerInterface) {
+        self.viewModel = MainViewModel(prayTimes: times, dateManager: dateManager)
+    }
+    
     func timeIsUp() {
         for cell in rootView.timesTableView.visibleCells {
             if let cell = cell as? TimeCell {
@@ -41,7 +45,7 @@ final class MainController : BaseViewController<MainView>,MainControllerInterfac
     }
     
     func refreshUI(timesViewModel: PrayViewModel) {
-        rootView.currentDateLabel.text = viewModel.getPrayViewModel().location + "\n" + viewModel.getCurrentDate()
+        rootView.currentDateLabel.text = viewModel.getPrayViewModel().location + "\n" + Date.getCurrentDateString()
     }
     
     func refrestTimer(_ time: String) {

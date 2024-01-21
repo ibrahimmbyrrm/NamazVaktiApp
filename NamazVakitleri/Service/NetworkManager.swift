@@ -28,7 +28,7 @@ final class NetworkManager : NetworkInterface {
         }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = type.method.rawValue
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
             DispatchQueue.main.async {
                 if (response as? HTTPURLResponse)?.statusCode != 200 {
                     completion(.failure(.invalidResponse))
@@ -37,7 +37,7 @@ final class NetworkManager : NetworkInterface {
                     completion(.failure(.invalidData))
                     return
                 }
-                self.parseModel(data: data) { result in
+                self?.parseModel(data: data) { result in
                     completion(result)
                 }
             }

@@ -35,7 +35,7 @@ final class LoginView: UIView {
     
     lazy var submitButton : UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .palette2
+        button.backgroundColor = .blue
         button.setTitle("Continue", for: .normal)
         button.tintColor = .white
         button.layer.cornerRadius = 30

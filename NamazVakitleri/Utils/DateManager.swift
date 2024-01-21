@@ -10,59 +10,78 @@ import SwiftDate
 
 protocol DateManagerDelegate : AnyObject {
     func updateTimer(countdownString : String)
-    func changeTheDay()
     func getClosestTime(date : Date)
     func timerFinished()
 }
 
 protocol DateManagerInterface {
     var delegate : DateManagerDelegate? {get set}
-    func calculateTimeRemaining(targetDates : [Date],isToday : Bool)
-    func getCurrentDateString() -> String
+    func setTodayDates(_ todayDates : [Date])
+    func setTomorrowDates(_ tomorrowDates : [Date])
+    func calculateTimeRemaining()
 }
 
 class DateManager : DateManagerInterface {
     
     weak var delegate : DateManagerDelegate?
     
+    private var todayDates : [Date] = []
+    private var tomorrowDates : [Date] = []
+    
     init(delegate: DateManagerDelegate? = nil) {
         self.delegate = delegate
     }
     
-    func getCurrentDateString() -> String {
-        let currentDate = Date.currentDate
-        let formatted = currentDate.toString(.custom("MMMM d YYYY EEEE"))
-        return formatted
+    func setTodayDates(_ todayDates : [Date]) {
+        self.todayDates = todayDates
+    }
+    func setTomorrowDates(_ tomorrowDates : [Date]) {
+        self.tomorrowDates = tomorrowDates
     }
     
-    func calculateTimeRemaining(targetDates : [Date],isToday : Bool) {
+    func calculateTimeRemaining() {
         
         var components: DateComponents?
         
-        components = isToday ? findClosestDate(in: targetDates) : targetDates[0] - Date.currentDate
-
+        components = findClosestDate(in: self.todayDates)
+        
         if let components {
             startCountdown(components: components)
         }else {
-            delegate?.changeTheDay()
+            calculateTimeRemainingForTomorrow(targetDate: tomorrowDates[0])
         }
+    }
+
+    private func calculateTimeRemainingForTomorrow(targetDate : Date) {
+        guard let dateComponents =  getDateComponents(date: targetDate) else {return}
+        startCountdown(components: dateComponents)
     }
     
     private func findClosestDate(in targetDates: [Date]) -> DateComponents? {
+        
         for date in targetDates {
-            if date.isAfterDate(Date.currentDate, granularity: .minute) {
-                delegate?.getClosestTime(date: date)
-                return date - Date.currentDate
+            if let component = getDateComponents(date: date) {
+                return component
+            }else {
+                continue
             }
         }
         return nil
     }
     
+    private func getDateComponents(date: Date) -> DateComponents? {
+        if date.isAfterDate(Date.currentDate, granularity: .minute) {
+            delegate?.getClosestTime(date: date)
+            return date - Date.currentDate
+        }
+        return nil
+    }
+
     private func startCountdown(components: DateComponents) {
         var remainingComponents = components
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             guard let self = self else { return }
-
+            
             if remainingComponents.second == 0 && remainingComponents.minute == 0 && remainingComponents.hour == 0 {
                 timer.invalidate()
                 delegate?.timerFinished()
@@ -77,12 +96,10 @@ class DateManager : DateManagerInterface {
                     remainingComponents.minute = 59
                     remainingComponents.second = 59
                 }
-
+                
                 let countdownText = String(format: Constants.timerTextFormat, remainingComponents.hour ?? 0, remainingComponents.minute ?? 0, remainingComponents.second ?? 0)
                 self.delegate?.updateTimer(countdownString: countdownText)
             }
         }
     }
-
-
 }
