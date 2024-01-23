@@ -10,7 +10,8 @@ import UIKit
 protocol MainControllerInterface : AnyObject {
     func refreshUI(timesViewModel : PrayViewModel)
     func refrestTimer(_ time : String)
-    
+    func startActivityIndicator()
+    func stopActivityIndicator()
     func setDelegates()
     func timeIsUp()
 }
@@ -24,11 +25,7 @@ final class MainController : BaseViewController<MainView>,MainControllerInterfac
         viewModel.delegate = self
         viewModel.viewDidLoad()
     }
-    
-    func setupViewModel(_ times : PrayResponse,dateManager : DateManagerInterface) {
-        self.viewModel = MainViewModel(prayTimes: times, dateManager: dateManager)
-    }
-    
+
     func timeIsUp() {
         for cell in rootView.timesTableView.visibleCells {
             if let cell = cell as? TimeCell {
@@ -39,13 +36,24 @@ final class MainController : BaseViewController<MainView>,MainControllerInterfac
         }
     }
     
+    func startActivityIndicator() {
+        rootView.activityIndicator.startAnimating()
+        rootView.timesTableView.isHidden = true
+    }
+    
+    func stopActivityIndicator() {
+        rootView.activityIndicator.stopAnimating()
+        rootView.timesTableView.isHidden = false
+    }
+    
     func setDelegates() {
         rootView.timesTableView.delegate = self
         rootView.timesTableView.dataSource = self
     }
     
     func refreshUI(timesViewModel: PrayViewModel) {
-        rootView.currentDateLabel.text = viewModel.getPrayViewModel().location
+        rootView.currentDateLabel.set(text: viewModel.getPrayViewModel().location,rightIcon: UIImage(systemName: "location.circle"))
+        rootView.timesTableView.reloadData()
     }
     
     func refrestTimer(_ time: String) {

@@ -36,25 +36,15 @@ class CitySelectionBox : UIView {
         textField.layer.borderWidth = 2
         textField.textAlignment = .center
         textField.placeholder = "Ankara"
+        textField.isEnabled = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
-    lazy var doneButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        button.tintColor = .blue
-        button.imageView?.contentMode = .scaleAspectFit
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let pickerView = UIPickerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
-        textField.inputView = pickerView
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,9 +56,8 @@ class CitySelectionBox : UIView {
     var centerYConstraint = NSLayoutConstraint()
     
     private func commonInit() {
-        addSubviews(views: [titleLabel,textField,doneButton])
+        addSubviews(views: [titleLabel,textField])
         textField.isHidden = true
-        doneButton.isHidden = true
         
         centerXConstraint = titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor,constant: 0)
         centerYConstraint = titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor,constant: 0)
@@ -82,14 +71,10 @@ class CitySelectionBox : UIView {
             centerXConstraint,
             centerYConstraint,
             titleLabel.heightAnchor.constraint(equalToConstant: 40),
-            textField.centerXAnchor.constraint(equalTo: self.centerXAnchor,constant: -20),
+            textField.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             textField.widthAnchor.constraint(equalToConstant: 260),
             textField.heightAnchor.constraint(equalToConstant: 50),
-            textField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            doneButton.leadingAnchor.constraint(equalTo: textField.trailingAnchor, constant: 3),
-            doneButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            doneButton.widthAnchor.constraint(equalToConstant: 50),
-            doneButton.heightAnchor.constraint(equalToConstant: 50)
+            textField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         ])
     }
 
@@ -97,25 +82,18 @@ class CitySelectionBox : UIView {
     func boxExpanded() {
         UIView.animate(withDuration: 0.5) { 
             if self.isExpanded {
-                self.doneButton.isHidden = false
                 self.textField.isHidden = false
                 self.centerXConstraint.constant = -50
                 self.centerYConstraint.constant = -40
                 self.layer.borderColor = UIColor.palette1.cgColor
             }else {
                 self.textField.isHidden = true
-                self.doneButton.isHidden = true
                 self.centerXConstraint.constant = 0
                 self.centerYConstraint.constant = 0
                 self.layer.borderColor = UIColor.palette2.cgColor
             }
         }
         
-    }
-    
-    func setPickerDelegate(delegate : UIPickerViewDelegate,dataSource : UIPickerViewDataSource) {
-        self.pickerView.delegate = delegate
-        self.pickerView.dataSource = dataSource
     }
     
     func didSelect(result : String) {

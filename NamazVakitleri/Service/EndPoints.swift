@@ -20,8 +20,8 @@ protocol EndPointType {
 }
 
 enum EndPointItems<T: Decodable> {
-    case timesForCity(String)
-    case timesForLocation(Double,Double)
+    case timesForCity(String?)
+    case timesForLocation(Double?,Double?)
 }
 
 extension EndPointItems : EndPointType {
@@ -37,8 +37,10 @@ extension EndPointItems : EndPointType {
         let currentDate = Date.currentDateString
         switch self {
         case .timesForCity(let city):
+            guard let city else {return ""}
             return "timesFromPlace?country=Turkey&region=\(city)&city=\(city)&date=\(currentDate)&days=3&timezoneOffset=180&calculationMethod=Turkey"
         case .timesForLocation(let latitude, let longitude):
+            guard let latitude,let longitude else {return ""}
             return "timesFromCoordinates?lat=\(latitude.description)&lng=\(longitude.description)&date=\(currentDate)&days=3&timezoneOffset=180&calculationMethod=Turkey"
         }
     }

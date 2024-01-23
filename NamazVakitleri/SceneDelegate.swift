@@ -19,6 +19,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         let navigationController = UINavigationController(rootViewController: LoginController())
+//        if let selection = UserDefaults.standard.value(forKey: "userCitySelection") as? String {
+//            let mainController = MainController()
+//            mainController.viewModel = MainViewModel(requestType: EndPointItems<PrayResponse>.timesForCity(selection), dateManager: DateManager())
+//            window.rootViewController = mainController
+//            
+//        }else if let latitude = UserDefaults.standard.value(forKey: "userLatitude") as? Double,let longitude = UserDefaults.standard.value(forKey: "userLongitude") as? Double  {
+//            let mainController = MainController()
+//            mainController.viewModel = MainViewModel(requestType: EndPointItems<PrayResponse>.timesForLocation(latitude, longitude), dateManager: DateManager())
+//            window.rootViewController = mainController
+//        }else {
+//            window.rootViewController = navigationController
+//        }
         window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()

@@ -9,6 +9,7 @@ import SwiftDate
 import Foundation
 
 extension Date {
+    
     static var currentDate : Date {
         let formatter = DateFormatter()
         let format = "MM-dd-yyyy HH:mm"

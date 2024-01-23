@@ -35,6 +35,7 @@ class DateManager : DateManagerInterface {
     func setTodayDates(_ todayDates : [Date]) {
         self.todayDates = todayDates
     }
+    
     func setTomorrowDates(_ tomorrowDates : [Date]) {
         self.tomorrowDates = tomorrowDates
     }
@@ -48,7 +49,7 @@ class DateManager : DateManagerInterface {
         if let components {
             startCountdown(components: components)
         }else {
-            calculateTimeRemainingForTomorrow(targetDate: tomorrowDates[0])
+            //calculateTimeRemainingForTomorrow(targetDate: tomorrowDates[0])
         }
     }
 

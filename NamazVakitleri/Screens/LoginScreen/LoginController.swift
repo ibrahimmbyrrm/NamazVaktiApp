@@ -9,14 +9,14 @@ import UIKit
 
 protocol LoginControllerInterface : AnyObject {
     func setupButtonActions()
-    func setDelegates()
-    func startActivityIndicator()
-    func stopActivityIndicator()
-    func refreshPicker()
-    func initializeMainControllerAndNavigate(times : PrayResponse)
+    func initializeMainControllerAndNavigate(vc : MainController)
 }
 
-final class LoginController: BaseViewController<LoginView>, LoginControllerInterface {
+protocol CityPickerDelegate : AnyObject {
+    func didFinishSelectCity(city : String)
+}
+
+final class LoginController: BaseViewController<LoginView>, LoginControllerInterface,CityPickerDelegate {
     
     private var viewModel : LoginViewModelInterface = LoginViewModel(service: NetworkManager())
     
@@ -26,41 +26,21 @@ final class LoginController: BaseViewController<LoginView>, LoginControllerInter
         viewModel.viewDidLoad()
     }
     
-    deinit {
-        print("deinit edildi")
-    }
-
-    func setDelegates() {
-        rootView.box1.setPickerDelegate(delegate: self, dataSource: self)
-    }
-    
-    func refreshPicker() {
-        rootView.box1.pickerView.reloadAllComponents()
-    }
-    
     func setupButtonActions() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(boxTapped))
         rootView.box1.addGestureRecognizer(gesture)
         let gesture2 = UITapGestureRecognizer(target: self, action: #selector(secondBoxTapped))
         rootView.box2.addGestureRecognizer(gesture2)
         rootView.submitButton.addTarget(nil, action: #selector(submitButtonTapped), for: .touchUpInside)
-        rootView.box1.doneButton.addTarget(nil, action: #selector(citySelectionEnded), for: .touchUpInside)
     }
     
-    func startActivityIndicator() {
-        rootView.activityIndicator.startAnimating()
+    func initializeMainControllerAndNavigate(vc : MainController) {
+        navigationController?.show(vc, sender: nil)
     }
     
-    func stopActivityIndicator() {
-        rootView.activityIndicator.stopAnimating()
-        
-    }
-    
-    func initializeMainControllerAndNavigate(times: PrayResponse) {
-        let mainController = MainController()
-        mainController.modalPresentationStyle = .fullScreen
-        mainController.setupViewModel(times, dateManager: DateManager())
-        navigationController?.show(mainController, sender: nil)
+    func didFinishSelectCity(city: String) {
+        rootView.box1.didSelect(result: city)
+        viewModel.setSelectedCity(city)
     }
     
     
@@ -73,34 +53,16 @@ final class LoginController: BaseViewController<LoginView>, LoginControllerInter
         }
     }
     
-    @objc func citySelectionEnded() {
-        rootView.box1.didSelect(result: viewModel.selectedCity)
-    }
-    
     @objc func secondBoxTapped() {
         rootView.locationTapped()
     }
     
     @objc func boxTapped() {
         rootView.manualTapped()
+        let picker = CityPickerView()
+        picker.delegate = self
+        present(picker, animated: true)
     }
 }
 
-extension LoginController : UIPickerViewDelegate,UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel.getTheNumberOfCities()
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return viewModel.cityTitleForRow(row)
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        viewModel.setSelectedCity(row)
-    }
-    
-}
 

@@ -26,7 +26,7 @@ protocol LoginViewModelInterface {
     
     func submitButtonTapped(type : RequestType)
     func viewDidLoad()
-    func setSelectedCity(_ row : Int)
+    func setSelectedCity(_ city : String)
     func cityTitleForRow(_ index : Int) -> String
     func getTheNumberOfCities() -> Int
     func getUsersLocation()
@@ -42,7 +42,7 @@ final class LoginViewModel : NSObject, LoginViewModelInterface{
         self.service = service
     }
     
-    var selectedCity: String = ""
+    var selectedCity: String = "Ankara"
     var userLocation: UserLocation = UserLocation(latitude: 42, longitude: 39)
     
     var locationManager = CLLocationManager()
@@ -56,33 +56,37 @@ final class LoginViewModel : NSObject, LoginViewModelInterface{
     
     func fetchPrayTimes(fetchMethod : RequestType) {
         let endpoint = fetchMethod == .city ? EndPointItems<PrayResponse>.timesForCity(self.selectedCity) : EndPointItems<PrayResponse>.timesForLocation(userLocation.latitude, userLocation.longitude)
-        
-        service.fetchData(type: endpoint) { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.delegate?.stopActivityIndicator()
-                self?.locationManager.stopUpdatingLocation()
-                self?.delegate?.initializeMainControllerAndNavigate(times: response)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        self.locationManager.stopUpdatingLocation()
+        let mainController = MainController()
+        mainController.viewModel = MainViewModel(requestType: endpoint, dateManager: DateManager())
+        mainController.modalPresentationStyle = .fullScreen
+        self.delegate?.initializeMainControllerAndNavigate(vc: mainController)
     }
     
     func submitButtonTapped(type : RequestType) {
-        delegate?.startActivityIndicator()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.fetchPrayTimes(fetchMethod: type)
+        saveOnUserDefaults(type: type)
+        self.fetchPrayTimes(fetchMethod: type)
+    }
+    
+    func saveOnUserDefaults(type : RequestType) {
+        switch type {
+        case .city:
+            UserDefaults.standard.set(self.selectedCity, forKey: "userCitySelection")
+            UserDefaults.standard.set(nil, forKey: "userLongitude")
+            UserDefaults.standard.setValue(nil, forKey: "userLatitude")
+        case .location:
+            UserDefaults.standard.set(self.userLocation.longitude, forKey: "userLongitude")
+            UserDefaults.standard.set(self.userLocation.latitude, forKey: "userLatitude")
+            UserDefaults.standard.set(nil, forKey: "userCitySelection")
         }
     }
     
-    func setSelectedCity(_ row : Int) {
-        self.selectedCity = Cities.allCases[row].rawValue
+    func setSelectedCity(_ city : String) {
+        self.selectedCity = city
     }
     
     func viewDidLoad() {
         delegate?.setupButtonActions()
-        delegate?.setDelegates()
     }
     
     func getTheNumberOfCities() -> Int {

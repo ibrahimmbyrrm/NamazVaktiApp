@@ -19,6 +19,7 @@
 		8010AD672B2DFD4B0013BAAB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD662B2DFD4B0013BAAB /* LoginView.swift */; };
 		8010AD692B2DFDCA0013BAAB /* CitySelectionBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010AD682B2DFDCA0013BAAB /* CitySelectionBox.swift */; };
 		805F0D302B3C35AF00FECEF6 /* TimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */; };
+		808421EC2B5FC7FB003CDE43 /* CityPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808421EB2B5FC7FB003CDE43 /* CityPickerView.swift */; };
 		808DB9512B3CC661000121D0 /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 808DB9502B3CC661000121D0 /* SwiftDate */; };
 		808DB9542B3F1382000121D0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DB9532B3F1382000121D0 /* Date+Ext.swift */; };
 		808DB9562B3F13A0000121D0 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DB9552B3F13A0000121D0 /* String+Ext.swift */; };
@@ -46,6 +47,7 @@
 		8010AD662B2DFD4B0013BAAB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8010AD682B2DFDCA0013BAAB /* CitySelectionBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectionBox.swift; sourceTree = "<group>"; };
 		805F0D2F2B3C35AF00FECEF6 /* TimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCell.swift; sourceTree = "<group>"; };
+		808421EB2B5FC7FB003CDE43 /* CityPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityPickerView.swift; sourceTree = "<group>"; };
 		808DB9532B3F1382000121D0 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		808DB9552B3F13A0000121D0 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		80B4DBDA2B2EFC6E0028BD14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				8010AD4F2B2DF8AC0013BAAB /* LoginController.swift */,
 				8010AD662B2DFD4B0013BAAB /* LoginView.swift */,
 				800E09A72B2F6829001712D0 /* LoginViewModel.swift */,
+				808421EB2B5FC7FB003CDE43 /* CityPickerView.swift */,
 			);
 			path = LoginScreen;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80B4DBDF2B2F015B0028BD14 /* NetworkManager.swift in Sources */,
+				808421EC2B5FC7FB003CDE43 /* CityPickerView.swift in Sources */,
 				80F0E0182B2F946C00B9D34A /* MainView.swift in Sources */,
 				8010AD692B2DFDCA0013BAAB /* CitySelectionBox.swift in Sources */,
 				8010AD502B2DF8AC0013BAAB /* LoginController.swift in Sources */,

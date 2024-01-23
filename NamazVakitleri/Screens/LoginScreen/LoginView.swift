@@ -27,12 +27,6 @@ final class LoginView: UIView {
     lazy var box1 = CitySelectionBox()
     lazy var box2 = LocationBox()
     
-    let activityIndicator : UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.hidesWhenStopped = true
-        return indicator
-    }()
-    
     lazy var submitButton : UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .blue
@@ -51,7 +45,6 @@ final class LoginView: UIView {
         addSubviews()
         setupMosqueIconConstraints()
         setupAppTitleConstraints()
-        setupActivityIndicatorConstraints()
         setupCityBoxConstraints()
         setupLocationBoxConstraints()
         setupSubmitButtonConstraints()
@@ -62,17 +55,10 @@ final class LoginView: UIView {
 
     //MARK: - Layout Functions
     private func addSubviews() {
-        [mosqueIcon,box1,box2,appTitle,submitButton,activityIndicator].forEach({
+        [mosqueIcon,box1,box2,appTitle,submitButton].forEach({
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         })
-    }
-    
-    private func setupActivityIndicatorConstraints() {
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-        ])
     }
     
     private func setupMosqueIconConstraints() {
